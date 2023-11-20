@@ -32,3 +32,4 @@ def register(request):
 def protected_view(request):
     # This view requires the user to be authenticated
     return Response({'message': 'You have access to the protected view'}, status=status.HTTP_200_OK)
+

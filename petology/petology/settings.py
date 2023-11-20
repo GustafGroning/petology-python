@@ -1,3 +1,5 @@
+import datetime
+
 """
 Django settings for petology project.
 
@@ -135,8 +137,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+}
+
+# TODO: research this, no idea what it does
+JWT_AUTH = {
+    'JWT_SECRET_KEY': SECRET_KEY,  # Use your Django project's secret key
+    'JWT_ALGORITHM': 'HS256',     # Encryption algorithm to be used
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),  # Token expiration time
+    # ... other JWT settings
 }
