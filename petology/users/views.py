@@ -6,6 +6,11 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
 
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework import status
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register(request):
@@ -30,6 +35,13 @@ def register(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def protected_view(request):
+    # Print the request headers
+    print("Request headers:", request.headers)
+    print("Authorization Header:", request.headers.get('Authorization'))
+
+    # Print the user information if authenticated
+    if request.user.is_authenticated:
+        print("Authenticated user:", request.user.username)
+
     # This view requires the user to be authenticated
     return Response({'message': 'You have access to the protected view'}, status=status.HTTP_200_OK)
-
