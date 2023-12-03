@@ -17,10 +17,17 @@ class Breed(models.Model):
 
 
 class Dog(models.Model):
+    SEX_CHOICES = (
+        (1, 'Hane'),  # Male
+        (2, 'Tik'),   # Female
+    )
+
     name = models.CharField(max_length=100)
-
-    # Foreign keys
     breed = models.ForeignKey(Breed, on_delete=models.CASCADE)
+    sex = models.IntegerField(choices=SEX_CHOICES)
+    birthday = models.DateField()
 
+    def __str__(self):
+        return self.name
 
 
