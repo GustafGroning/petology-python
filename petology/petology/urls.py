@@ -36,4 +36,9 @@ curl -X POST -H "Content-Type: application/json" -d '{"token":"eyJ0eXAiOiJKV1QiL
 curl -X POST -H "Content-Type: application/json" -d '{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6Imd1c3RhZiIsImV4cCI6MTcwMDQ5NzU4MiwiZW1haWwiOiJndXN0YWZAZ3VzdGFmLmNvbSJ9.0vNd0CC8LfgSDv-Mv2vTeiRhjuoDb75dzfRbxF6pq6Y"}' http://localhost:8000/api-token-verify/
 
 curl -X POST -H "Content-Type: application/json" -d '{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6Imd1c3RhZiIsImV4cCI6MTcwMDQ5NzU4MiwiZW1haWwiOiJndXN0YWZAZ3VzdGFmLmNvbSJ9.0vNd0CC8LfgSDv-Mv2vTeiRhjuoDb75dzfRbxF6pq6Y"}' http://localhost:8000/api-token-refresh/
+
+curl -X GET \
+     -H "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6Imd1c3RhZiIsImV4cCI6MTcwMjI5NDU2OCwiZW1haWwiOiJndXN0YWZAZ3VzdGFmLmNvbSJ9.6MZUBJfkVLr7xSD8zRwl5ih1zxpxoVWv5cn4wHiqkI8" \
+     http://localhost:8000/api/dog/breeds/
+
 """
