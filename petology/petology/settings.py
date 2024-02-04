@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'dogs.apps.DogsConfig',
     'tasks.apps.TasksConfig',
-
+    'articles.apps.ArticlesConfig',
     # Other apps
     'rest_framework.authtoken',  # Add this line
 

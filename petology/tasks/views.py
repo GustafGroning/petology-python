@@ -105,6 +105,20 @@ def update_task(request, task_id):
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 ###################################################################
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def partial_update_task(request, task_id):
+    try:
+        task = Task.objects.get(pk=task_id)
+    except Task.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    serializer = TaskSerializer(task, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+###################################################################
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def delete_task(request, task_id):

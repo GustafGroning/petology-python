@@ -27,6 +27,8 @@ urlpatterns = [
     path('api-token-verify/', verify_jwt_token),
     path('api/dog/', include('dogs.urls')),
     path('api/tasks/', include('tasks.urls')),
+    path('api/articles/', include('articles.urls')),  # Include the articles app URLs
+
 
 ]
 
