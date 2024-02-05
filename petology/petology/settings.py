@@ -1,5 +1,5 @@
 import datetime
-
+import os
 """
 Django settings for petology project.
 
@@ -27,8 +27,17 @@ SECRET_KEY = 'django-insecure-=y%^r*7qq9_nrtx02h0d0+6_p3#)5)c44(^^h28*wg%j=l)6hh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '0.0.0.0',
+    'localhost',
+    '127.0.0.1'
+]
 
+# Base directory where media files are stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# URL that handles the media served from MEDIA_ROOT
+MEDIA_URL = '/media/'
 
 # Application definition
 

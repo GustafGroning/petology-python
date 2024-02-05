@@ -1,8 +1,7 @@
-from django.shortcuts import render
-from django.views.generic import ListView
+from rest_framework.generics import ListAPIView
 from .models import Article
+from .serializers import ArticleListSerializer
 
-class ArticleListView(ListView):
-    model = Article
-    template_name = 'articles/article_list.html'  # You need to create this template
-
+class ArticleListView(ListAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleListSerializer
