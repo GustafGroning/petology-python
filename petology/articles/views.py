@@ -1,6 +1,6 @@
 from rest_framework.generics import ListAPIView
 from .models import Article
-from .serializers import ArticleListSerializer, ArticleDetailSerializer
+from .serializers import ArticleDetailSerializer
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404
 
 class ArticleListView(ListAPIView):
     queryset = Article.objects.all()
-    serializer_class = ArticleListSerializer
+    serializer_class = ArticleDetailSerializer
 
 
 @api_view(['GET'])
