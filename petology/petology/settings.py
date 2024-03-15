@@ -12,6 +12,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+"""
+TODO: research time_zones. How should we handle it? Setting
+time to Sweden is bad for later on when we want to handle other
+countries.
+
+
+"""
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -89,7 +97,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'petology.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
