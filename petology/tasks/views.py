@@ -17,6 +17,7 @@ from rest_framework.permissions import IsAuthenticated
 @permission_classes([IsAuthenticated])
 def create_task(request):
     serializer = TaskSerializer(data=request.data)
+    print('serializer: ', serializer)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)

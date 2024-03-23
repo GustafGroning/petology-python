@@ -24,5 +24,18 @@
             "skin_and_coat": 5,
             "locomotor_system": 5
         }
+    },
+    {
+        "model": "dogs.breed",
+        "pk": 3,
+        "fields": {
+            "name": "Nova Scotia Duck Tolling Retriever",
+            "general_condition": 5,
+            "other": 4,
+            "dental_health": 5,
+            "eyes": 5,
+            "skin_and_coat": 5,
+            "locomotor_system": 5
+        }
     }
 ]

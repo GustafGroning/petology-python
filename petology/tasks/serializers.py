@@ -6,7 +6,7 @@ class TaskSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Task
-        fields = ['id', 'dog', 'dog_name', 'name', 'location', 'start_time', 'end_time', 'repeat', 'category', 'reminder', 'notes', 'completed']  # Added 'completed'
+        fields = ['id', 'dog', 'dog_name', 'name', 'location', 'start_time', 'repeat', 'category', 'reminder', 'notes', 'completed']  # Added 'completed'
 
     def get_dog_name(self, obj):
         return obj.dog.name
