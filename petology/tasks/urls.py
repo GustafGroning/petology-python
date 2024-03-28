@@ -9,7 +9,6 @@ urlpatterns = [
     path('update/<int:task_id>/', views.update_task, name='update_task'),
     path('delete/<int:task_id>/', views.delete_task, name='delete_task'),
     path('get/dog/<int:dog_id>/', views.list_tasks_for_dog, name='list_tasks_for_dog'),
-    path('update/<int:task_id>/', views.update_task, name='update_task'),
     path('patch/<int:task_id>/', views.partial_update_task, name='partial_update_task'),
 
 ]

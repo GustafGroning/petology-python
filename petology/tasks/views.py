@@ -95,6 +95,7 @@ def get_task(request, task_id):
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def update_task(request, task_id):
+    print('inside update_task')
     try:
         task = Task.objects.get(pk=task_id)
     except Task.DoesNotExist:
@@ -104,11 +105,17 @@ def update_task(request, task_id):
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        # Log serializer errors
+        print("Serializer Errors:", serializer.errors)
+        # You can log the errors to a file or another logging destination as well
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 ###################################################################
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 def partial_update_task(request, task_id):
+    print('inside partialy_update_task')
     try:
         task = Task.objects.get(pk=task_id)
     except Task.DoesNotExist:
@@ -118,8 +125,13 @@ def partial_update_task(request, task_id):
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-###################################################################
+    else:
+        # Log serializer errors
+        print("Serializer Errors:", serializer.errors)
+        # You can log the errors to a file or another logging destination as well
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def delete_task(request, task_id):

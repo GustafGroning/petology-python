@@ -102,18 +102,19 @@ WSGI_APPLICATION = 'petology.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
     'default': {
-    'ENGINE': 'django.db.backends.postgresql',  # Set the database engine to PostgreSQL
-    'NAME': 'petology',               # Set the name of your PostgreSQL database
-    'USER': 'gustaf',               # Set the username for connecting to PostgreSQL
-    'PASSWORD': 'admin123',       # Set the password for connecting to PostgreSQL
-    'HOST': '16.171.40.250',               # Set the host address of your PostgreSQL instance (e.g., EC2 public IP or DNS)
-    'PORT': '5432',                             # Set the port number for PostgreSQL (default: 5432)
-}
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+    # REAL DB SETUP:
+#     'default': {
+#     'ENGINE': 'django.db.backends.postgresql',  # Set the database engine to PostgreSQL
+#     'NAME': 'petology',               # Set the name of your PostgreSQL database
+#     'USER': 'gustaf',               # Set the username for connecting to PostgreSQL
+#     'PASSWORD': 'admin123',       # Set the password for connecting to PostgreSQL
+#     'HOST': '16.171.40.250',               # Set the host address of your PostgreSQL instance (e.g., EC2 public IP or DNS)
+#     'PORT': '5432',                             # Set the port number for PostgreSQL (default: 5432)
+# }
 }
 
 
