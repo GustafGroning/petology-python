@@ -16,12 +16,19 @@ from rest_framework.permissions import IsAuthenticated
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_task(request):
-    serializer = TaskSerializer(data=request.data)
-    print('serializer: ', serializer)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    try:
+        print('Request data:', request.data)  # Log the request data
+        serializer = TaskSerializer(data=request.data)
+        print('serializer: ', serializer)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            print('Serializer errors:', serializer.errors)  # Log the serializer errors
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        print('Error creating task:', e)  # Log any exceptions that occur
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 ###################################################################
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -93,9 +100,10 @@ def get_task(request, task_id):
     return Response(serializer.data)
 ###################################################################
 @api_view(['PUT'])
-@permission_classes([IsAuthenticated])
 def update_task(request, task_id):
-    print('inside update_task')
+    print('Received request to update task with ID:', task_id)
+    print('Request data:', request.data)  # Print the request data received
+
     try:
         task = Task.objects.get(pk=task_id)
     except Task.DoesNotExist:
@@ -104,6 +112,7 @@ def update_task(request, task_id):
     serializer = TaskSerializer(task, data=request.data)
     if serializer.is_valid():
         serializer.save()
+        print('Task updated successfully:', serializer.data)  # Print the updated task data
         return Response(serializer.data)
     else:
         # Log serializer errors
