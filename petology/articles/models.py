@@ -6,6 +6,6 @@ class Article(models.Model):
     publication_date = models.DateTimeField(auto_now_add=True)
     body = models.TextField()
     image = models.ImageField(upload_to='articles_images/', blank=True, null=True)  # Add this line
-
+    featured_article = models.BooleanField(default=False)
     def __str__(self):
         return self.title
