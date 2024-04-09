@@ -14,21 +14,35 @@ class Breed(models.Model):
     skin_and_coat = models.IntegerField(default=1)     # Hud och päls
     locomotor_system = models.IntegerField(default=1)  # Rörelseapparaten
 
+
     def __str__(self):
         return self.name
 
 
 
 class Dog(models.Model):
-    SEX_CHOICES = (
-        (1, 'Hane'),
-        (2, 'Tik'),
-    )
+    # SEX_CHOICES = (
+    #     (1, 'Hane'),
+    #     (2, 'Tik'),
+    # )
     name = models.CharField(max_length=100)
     ownerId = models.ForeignKey(User, on_delete=models.CASCADE)
     breed = models.ForeignKey(Breed, on_delete=models.CASCADE)
-    sex = models.IntegerField(choices=SEX_CHOICES)
+    sex = models.CharField(max_length=100)
     birthday = models.DateField()
+
+    # New fields
+    pedigree_name = models.TextField(null=True, default=None)                 # Pedigree Name
+    color = models.TextField(null=True, default=None)                         # Color
+    insurance_company = models.TextField(null=True, default=None)             # Insurance Company
+    insurance_number = models.TextField(null=True, default=None)              # Insurance Number
+    feed = models.TextField(null=True, default=None)                          # Feed
+    possible_feed_intolerance = models.TextField(null=True, default=None)     # Possible Feed Intolerance
+
+    id_number = models.TextField(null=True, default=None)
+    registration_number = models.TextField(null=True, default=None)
+    passport_number = models.TextField(null=True, default=None)
+
 
     def __str__(self):
         return self.name

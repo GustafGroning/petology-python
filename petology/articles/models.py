@@ -9,3 +9,4 @@ class Article(models.Model):
     featured_article = models.BooleanField(default=False)
     def __str__(self):
         return self.title
+

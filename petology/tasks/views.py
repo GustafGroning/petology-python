@@ -79,6 +79,7 @@ def list_tasks_for_dog(request, dog_id):
     # Check if the dog belongs to the authenticated user
     try:
         dog = Dog.objects.get(pk=dog_id, ownerId=request.user)
+        print('found dog ', dog)
     except Dog.DoesNotExist:
         return Response({'error': 'Dog not found or not owned by user'}, status=status.HTTP_404_NOT_FOUND)
 

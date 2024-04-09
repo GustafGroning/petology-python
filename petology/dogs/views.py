@@ -22,6 +22,7 @@ from datetime import datetime
 @permission_classes([IsAuthenticated])
 def register_dog(request):
     if request.user.is_authenticated:
+        print('dog sex inside back-end ', request.data.get('sex'))
         name = request.data.get('name')
         breed_name = request.data.get('breed')  # Get breed name from request
         birthday = datetime.strptime(request.data.get('birthday'), '%Y-%m-%d').date()
@@ -59,7 +60,16 @@ def get_user_dogs(request):
                 'name': dog.name,
                 'breed': dog.breed.name,  # Assuming Breed has a 'name' field
                 'birthday': dog.birthday,
-                'sex': dog.sex
+                'sex': dog.sex,
+                'pedigree_name': dog.pedigree_name,                     # New field
+                'color': dog.color,                                     # New field
+                'insurance_company': dog.insurance_company,             # New field
+                'insurance_number': dog.insurance_number,               # New field
+                'feed': dog.feed,                                       # New field
+                'possible_feed_intolerance': dog.possible_feed_intolerance,  # New field
+                'id_number': dog.id_number,
+                'registration_number': dog.registration_number,
+                'passport_number': dog.passport_number
             }
             dogs_data.append(dog_data)
 
@@ -76,7 +86,16 @@ def get_dog_by_id(request, dog_id):
         'name': dog.name,
         'breed': dog.breed.name,  # Accessing the name attribute of the Breed object
         'birthday': dog.birthday,
-        'sex': dog.sex
+        'sex': dog.sex,
+        'pedigree_name': dog.pedigree_name,                     # New field
+        'color': dog.color,                                     # New field
+        'insurance_company': dog.insurance_company,             # New field
+        'insurance_number': dog.insurance_number,               # New field
+        'feed': dog.feed,                                       # New field
+        'possible_feed_intolerance': dog.possible_feed_intolerance,  # New field
+        'id_number': dog.id_number,
+        'registration_number': dog.registration_number,
+        'passport_number': dog.passport_number
     }
     return Response(dog_data)
     
