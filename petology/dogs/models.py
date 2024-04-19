@@ -21,10 +21,6 @@ class Breed(models.Model):
 
 
 class Dog(models.Model):
-    # SEX_CHOICES = (
-    #     (1, 'Hane'),
-    #     (2, 'Tik'),
-    # )
     name = models.CharField(max_length=100)
     ownerId = models.ForeignKey(User, on_delete=models.CASCADE)
     breed = models.ForeignKey(Breed, on_delete=models.CASCADE)

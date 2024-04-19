@@ -27,7 +27,6 @@ def register_dog(request):
         breed_name = request.data.get('breed')  # Get breed name from request
         birthday = datetime.strptime(request.data.get('birthday'), '%Y-%m-%d').date()
         sex = request.data.get('sex')  # 1 = male, 2 = female
-        sexAsInt = 1 if sex == 'hane' else 2
 
         # Find the Breed instance
         try:
@@ -38,7 +37,7 @@ def register_dog(request):
         ownerId = request.user
 
         # Create the new Dog object
-        new_dog = Dog.objects.create(name=name, breed=breed, birthday=birthday, sex=sexAsInt, ownerId=ownerId)
+        new_dog = Dog.objects.create(name=name, breed=breed, birthday=birthday, sex=sex, ownerId=ownerId)
 
         # Return the new dog's ID and status_code 200
         return Response({'dog_id': new_dog.id}, status=200)
@@ -98,6 +97,73 @@ def get_dog_by_id(request, dog_id):
         'passport_number': dog.passport_number
     }
     return Response(dog_data)
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update_dog(request, dog_id):
+    try:
+        dog = Dog.objects.get(id=dog_id, ownerId=request.user)
+    except Dog.DoesNotExist:
+        return Response({'error': 'Dog not found'}, status=404)
+
+    # Update the fields based on the request data
+    dog.name = request.data.get('name', dog.name)
+    dog.breed = request.data.get('breed', dog.breed)
+    dog.birthday = request.data.get('birthday', dog.birthday)
+    dog.sex = request.data.get('sex', dog.sex)
+    dog.pedigree_name = request.data.get('pedigree_name', dog.pedigree_name)
+    dog.color = request.data.get('color', dog.color)
+    dog.insurance_company = request.data.get('insurance_company', dog.insurance_company)
+    dog.insurance_number = request.data.get('insurance_number', dog.insurance_number)
+    dog.feed = request.data.get('feed', dog.feed)
+    dog.possible_feed_intolerance = request.data.get('possible_feed_intolerance', dog.possible_feed_intolerance)
+    dog.id_number = request.data.get('id_number', dog.id_number)
+    dog.registration_number = request.data.get('registration_number', dog.registration_number)
+    dog.passport_number = request.data.get('passport_number', dog.passport_number)
+
+    dog.save()
+
+    return Response({'message': 'Dog updated successfully'}, status=200)
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def partial_update_dog(request, dog_id):
+    try:
+        dog = Dog.objects.get(id=dog_id, ownerId=request.user)
+    except Dog.DoesNotExist:
+        return Response({'error': 'Dog not found'}, status=404)
+
+    # Update specific fields based on the request data
+    if 'name' in request.data:
+        dog.name = request.data['name']
+    if 'breed' in request.data:
+        dog.breed = request.data['breed']
+    if 'birthday' in request.data:
+        dog.birthday = request.data['birthday']
+    if 'sex' in request.data:
+        dog.sex = request.data['sex']
+    if 'pedigree_name' in request.data:
+        dog.pedigree_name = request.data['pedigree_name']
+    if 'color' in request.data:
+        dog.color = request.data['color']
+    if 'insurance_company' in request.data:
+        dog.insurance_company = request.data['insurance_company']
+    if 'insurance_number' in request.data:
+        dog.insurance_number = request.data['insurance_number']
+    if 'feed' in request.data:
+        dog.feed = request.data['feed']
+    if 'possible_feed_intolerance' in request.data:
+        dog.possible_feed_intolerance = request.data['possible_feed_intolerance']
+    if 'id_number' in request.data:
+        dog.id_number = request.data['id_number']
+    if 'registration_number' in request.data:
+        dog.registration_number = request.data['registration_number']
+    if 'passport_number' in request.data:
+        dog.passport_number = request.data['passport_number']
+
+    dog.save()
+
+    return Response({'message': 'Dog updated successfully'}, status=200)
     
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
