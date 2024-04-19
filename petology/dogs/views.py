@@ -104,11 +104,20 @@ def update_dog(request, dog_id):
     try:
         dog = Dog.objects.get(id=dog_id, ownerId=request.user)
     except Dog.DoesNotExist:
-        return Response({'error': 'Dog not found'}, status=404)
+        return Response({'error': 'Dog not found'}, status=status.HTTP_404_NOT_FOUND)
 
     # Update the fields based on the request data
     dog.name = request.data.get('name', dog.name)
-    dog.breed = request.data.get('breed', dog.breed)
+
+    breed_name = request.data.get('breed')
+    if breed_name:
+        try:
+            print('inside the breed_name thingy')
+            breed = Breed.objects.get(name=breed_name)
+            dog.breed = breed
+        except Breed.DoesNotExist:
+            return Response({'error': 'Invalid breed name'}, status=status.HTTP_400_BAD_REQUEST)
+
     dog.birthday = request.data.get('birthday', dog.birthday)
     dog.sex = request.data.get('sex', dog.sex)
     dog.pedigree_name = request.data.get('pedigree_name', dog.pedigree_name)
@@ -123,7 +132,8 @@ def update_dog(request, dog_id):
 
     dog.save()
 
-    return Response({'message': 'Dog updated successfully'}, status=200)
+    return Response({'message': 'Dog updated successfully'}, status=status.HTTP_200_OK)
+
 
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
@@ -137,7 +147,12 @@ def partial_update_dog(request, dog_id):
     if 'name' in request.data:
         dog.name = request.data['name']
     if 'breed' in request.data:
-        dog.breed = request.data['breed']
+        breed_name = request.data['breed']
+        try:
+            breed = Breed.objects.get(name=breed_name)
+            dog.breed = breed
+        except Breed.DoesNotExist:
+            return Response({'error': 'Invalid breed name'}, status=status.HTTP_400_BAD_REQUEST)
     if 'birthday' in request.data:
         dog.birthday = request.data['birthday']
     if 'sex' in request.data:
@@ -164,6 +179,23 @@ def partial_update_dog(request, dog_id):
     dog.save()
 
     return Response({'message': 'Dog updated successfully'}, status=200)
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_dog(request, dog_id):
+    try:
+        # Attempt to retrieve the dog
+        dog = Dog.objects.get(id=dog_id, ownerId=request.user)
+    except Dog.DoesNotExist:
+        # If the dog does not exist, return an error response
+        return Response({'error': 'Dog not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    # If the dog exists and belongs to the authenticated user, delete it
+    dog.delete()
+
+    # Return a success response
+    return Response({'message': 'Dog deleted successfully'}, status=status.HTTP_200_OK)
+
     
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
