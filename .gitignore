@@ -1,7 +1,15 @@
+# Ignore SQLite database file
+db.sqlite3
+
+# Ignore Python bytecode files
+**/__pycache__/*
+**/__pycache__/*.*
+
+# Ignore specific Python bytecode files
+dogs/__pycache__/*
+articles/__pycache__/*
+tasks/__pycache__/*
+users/__pycache__/*
+
+# Ignore specific SQLite database file
 petology/db.sqlite3
-petology/dogs/__pycache__/*
-petology/dogs/__pycache__/*
-petology/articles/__pycache__/*
-petology/tasks/__pycache__/*
-petology/users/__pycache__/*
-petology/users/__pycache__/*
