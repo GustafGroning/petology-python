@@ -18,9 +18,11 @@ from rest_framework.permissions import IsAuthenticated
 def create_task(request):
     try:
         print('Request data:', request.data)  # Log the request data
+        print('request.data ', request.data)
         serializer = TaskSerializer(data=request.data)
         print('serializer: ', serializer)
         if serializer.is_valid():
+            print('Serializer data:', serializer.validated_data)  # Log the validated serializer data
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:

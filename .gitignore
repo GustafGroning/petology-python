@@ -2,5 +2,6 @@ petology/db.sqlite3
 petology/dogs/__pycache__/*
 petology/dogs/__pycache__/*
 petology/articles/__pycache__/*
-petology/db.sqlite3
 petology/tasks/__pycache__/*
+petology/users/__pycache__/*
+petology/users/__pycache__/*

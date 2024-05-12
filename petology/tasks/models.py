@@ -1,9 +1,6 @@
 from django.db import models
 from dogs.models import Dog
-"""
-TODO: sätt tillbaka end_time och sätt start_time till dateTimeField igen.
-Har varit bökigt att hantera tid, kör enbart datum just nu så får det fixas senare.
-"""
+
 class Task(models.Model):
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
@@ -18,3 +15,8 @@ class Task(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+    @property
+    def dog_name(self):
+        return self.dog.name if self.dog else None
