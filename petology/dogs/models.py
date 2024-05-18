@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 # Breeds exist primarily for the Health Index - breed 
-# impacts how many of which type of questions users will receive daily.
+
 class Breed(models.Model):
     name = models.CharField(max_length=100)
     general_condition = models.IntegerField(default=1)  # Allmäntillstånd
