@@ -3,7 +3,12 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-# Breeds exist primarily for the Health Index - breed 
+"""
+Breeds exist primarily for the Health Index - breed 
+There's a strong chance healthIndex fields will be removed from this model.
+Might not need a Breed model at all after some redesigns, if breed is only used to
+display a dogs breed then we can just have that as a field on dog instead.
+"""
 
 class Breed(models.Model):
     name = models.CharField(max_length=100)
@@ -41,6 +46,6 @@ class Dog(models.Model):
 
 
     def __str__(self):
-        return self.name
+        return f'{self.name} {self.id}' 
 
 
