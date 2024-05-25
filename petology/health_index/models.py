@@ -14,6 +14,7 @@ data by filtering for latest row only.
 class DogHealthIndex(models.Model):
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
     latest_run_batch_id = models.IntegerField(default=1)
+    batches_in_row = models.IntegerField(default=0)
     date_performed = models.DateTimeField()
     general_condition = models.IntegerField(default=1)  # Allmäntillstånd
     dental_health = models.IntegerField(default=1)      # Munhälsa

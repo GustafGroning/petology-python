@@ -27,20 +27,27 @@ from .models import HealthIndexBatch, DogHealthIndex, HealthIndexQuestion
 """
 Gets only latest row for a specific dog.
 """
-# @permission_classes([IsAuthenticated])
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_latest_row_for_dog(request, dog_id):
-    # if request.user.is_authenticated:
-    print('hello this is an end-point!')
-
+    if request.user.is_authenticated:
+        print('before fetch')
+        dog_rows = DogHealthIndex.objects.filter(dog=dog_id).latest('date_performed')
+        print('after fetch')
+        print('dog_rows ', dog_rows)
+        
+        serializer = DogHealthIndexSerializer(dog_rows)
+        return Response(serializer.data)
 
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_all_rows_for_dog(request, dog_id):
-    dog_rows = DogHealthIndex.objects.filter(dog=dog_id)
+    if request.user.is_authenticated:
+        dog_rows = DogHealthIndex.objects.filter(dog=dog_id)
 
-    serializer = DogHealthIndexSerializer(dog_rows, many=True)
-    return Response(serializer.data)
+        serializer = DogHealthIndexSerializer(dog_rows, many=True)
+        return Response(serializer.data)
 
 
 

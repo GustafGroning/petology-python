@@ -6,4 +6,4 @@ class DogHealthIndexSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DogHealthIndex
-        fields = ['id', 'dog_name', 'latest_run_batch_id', 'date_performed', 'general_condition', 'dental_health', 'eyes', 'skin_and_coat', 'locomotor_system', 'other']
+        fields = ['id', 'dog_name', 'latest_run_batch_id', 'batches_in_row', 'date_performed', 'general_condition', 'dental_health', 'eyes', 'skin_and_coat', 'locomotor_system', 'other']
