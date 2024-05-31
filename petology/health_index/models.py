@@ -38,11 +38,17 @@ class HealthIndexQuestion(models.Model):
 
 
     def __str__(self):
-        return self.name
+        return f'Question {self.id}'
 
 
+FREQUENCY_CHOICES = (
+    (1, '7/week'),
+    (2, '3/week'),
+    (3, 'Custom'), # Use custom later for any dogs where user sets a custom time span.
+)
 class HealthIndexBatch(models.Model):
-    questions = models.JSONField()
+    questions = models.JSONField() # JSON-structure with question IDs
+    frequency = models.IntegerField( choices=FREQUENCY_CHOICES, default=1)
 
-    def __str__(self):
-        return self.name
+    # def __str__(self):
+    #     return self.questions

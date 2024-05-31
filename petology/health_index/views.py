@@ -12,7 +12,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import DogHealthIndexSerializer
+from .serializers import DogHealthIndexSerializer, HealthIndexQuestionSerializer
 
 # from .models import Dog, Breed
 from .models import HealthIndexBatch, DogHealthIndex, HealthIndexQuestion
@@ -49,8 +49,6 @@ def get_all_rows_for_dog(request, dog_id):
         serializer = DogHealthIndexSerializer(dog_rows, many=True)
         return Response(serializer.data)
 
-
-
 """
 POST
 # New values might be a part of the request?
@@ -84,7 +82,18 @@ get_question(request, question_id):
     answers = [each in HealthIndexQuestion.answers]
     return question, answers
 """
-
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_questions_in_batch(request, batch_id):
+    batch = get_object_or_404(HealthIndexBatch, id=batch_id)
+    question_ids = batch.questions  # Assuming questions is a list of IDs in JSON format
+    questions = HealthIndexQuestion.objects.filter(id__in=question_ids)
+    serializer = HealthIndexQuestionSerializer(questions, many=True)
+    response_data = {
+        "batch_id": batch_id,
+        "questions": serializer.data
+    }
+    return Response(response_data, status=status.HTTP_200_OK)
 
 ###################################################################
 # HealthIndexBatch requests
