@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'tasks.apps.TasksConfig',
     'articles.apps.ArticlesConfig',
     'health_index.apps.HealthIndexConfig',
+    'health_records.apps.HealthRecordsConfig',
     # Other apps
     'rest_framework.authtoken',  # Add this line
 

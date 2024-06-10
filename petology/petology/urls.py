@@ -4,6 +4,8 @@ from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include  # Assuming you already have these imports
+from django.views.generic.base import RedirectView  # Import RedirectView
+
 """petology URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -31,6 +33,9 @@ urlpatterns = [
     path('api/tasks/', include('tasks.urls')),
     path('api/articles/', include('articles.urls')),  # Include the articles app URLs
     path('api/health-index/', include('health_index.urls')),
+    path('api/health-records/', include('health_records.urls')),
+    path('', RedirectView.as_view(url='/admin/', permanent=False)),  # Redirect root to admin
+
 ]
 
 # This is to serve media files during development
