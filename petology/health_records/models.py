@@ -30,6 +30,7 @@ class Medication(models.Model):
         return self
 
 class Condition(models.Model):
+    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
     name = models.CharField(max_length=120, null=False)
     onset_date = models.DateField()
     follow_up_date = models.DateField()
@@ -43,6 +44,7 @@ class Condition(models.Model):
         return self
 
 class Vaccination(models.Model):
+    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
     name = models.CharField(max_length=120)
     vaccination_date = models.DateField()
     next_vaccination_date = models.DateField(null=True)
@@ -50,4 +52,4 @@ class Vaccination(models.Model):
     notes = models.CharField(max_length=120)
 
     def __str__(self):
-        return self
+        return f'{self.dog} - {self.name}'

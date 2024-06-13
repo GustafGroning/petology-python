@@ -83,6 +83,13 @@ def get_condition(request, pk):
     serializer = ConditionSerializer(condition)
     return Response(serializer.data)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_conditions_for_dog(request, dog_id):
+    conditions = Condition.objects.filter(dog_id=dog_id)
+    serializer = ConditionSerializer(conditions, many=True)
+    return Response(serializer.data)
+
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def update_condition(request, pk):
@@ -115,11 +122,19 @@ def delete_condition(request, pk):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_vaccination(request):
+    print('reached the back-end')
     serializer = VaccinationSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_vaccinations_for_dog(request, dog_id):
+    vaccinations = Vaccination.objects.filter(dog_id=dog_id)
+    serializer = VaccinationSerializer(vaccinations, many=True)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

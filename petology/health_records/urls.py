@@ -15,6 +15,7 @@ urlpatterns = [
     path('conditions/<int:pk>/update/', views.update_condition, name='condition-update'),
     path('conditions/<int:pk>/partial_update/', views.partial_update_condition, name='condition-partial-update'),
     path('conditions/<int:pk>/delete/', views.delete_condition, name='condition-delete'),
+    path('conditions/dog/<int:dog_id>/', views.get_conditions_for_dog, name='get_conditions_for_dog'),
 
     path('vaccinations/', views.list_vaccinations, name='vaccination-list'),
     path('vaccinations/create/', views.create_vaccination, name='vaccination-create'),
@@ -22,4 +23,5 @@ urlpatterns = [
     path('vaccinations/<int:pk>/update/', views.update_vaccination, name='vaccination-update'),
     path('vaccinations/<int:pk>/partial_update/', views.partial_update_vaccination, name='vaccination-partial-update'),
     path('vaccinations/<int:pk>/delete/', views.delete_vaccination, name='vaccination-delete'),
+    path('vaccinations/dog/<int:dog_id>/', views.get_vaccinations_for_dog, name='get_vaccinations_for_dog'),
 ]
