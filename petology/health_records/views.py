@@ -63,10 +63,12 @@ def delete_medication(request, pk):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_condition(request):
+    print('Request data:', request.data)  # Log the incoming data
     serializer = ConditionSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    print('Serializer errors:', serializer.errors)  # Log any serializer errors
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
@@ -122,7 +124,6 @@ def delete_condition(request, pk):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_vaccination(request):
-    print('reached the back-end')
     serializer = VaccinationSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
