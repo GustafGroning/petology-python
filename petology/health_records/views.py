@@ -19,6 +19,13 @@ def create_medication(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+def get_medications_for_dog(request, dog_id):
+    medications = Medication.objects.filter(condition__dog_id=dog_id).distinct()
+    serializer = MedicationSerializer(medications, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def list_medications(request):
     medications = Medication.objects.all()
     serializer = MedicationSerializer(medications, many=True)

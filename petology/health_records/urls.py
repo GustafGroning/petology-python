@@ -8,6 +8,7 @@ urlpatterns = [
     path('medications/<int:pk>/update/', views.update_medication, name='medication-update'),
     path('medications/<int:pk>/partial_update/', views.partial_update_medication, name='medication-partial-update'),
     path('medications/<int:pk>/delete/', views.delete_medication, name='medication-delete'),
+    path('medications/dog/<int:dog_id>/', views.get_medications_for_dog, name='get_medications_for_dog'),
 
     path('conditions/', views.list_conditions, name='condition-list'),
     path('conditions/create/', views.create_condition, name='condition-create'),
