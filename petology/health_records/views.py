@@ -107,7 +107,10 @@ def update_condition(request, pk):
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        print("Validation Errors:", serializer.errors)  # Log validation errors
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
@@ -166,6 +169,7 @@ def update_vaccination(request, pk):
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
+    print(serializer.errors)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PATCH'])

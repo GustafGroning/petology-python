@@ -12,23 +12,6 @@ Can get historical data by bringing out all rows for a dog, or get present
 data by filtering for latest row only.
 """
 
-
-class Medication(models.Model):
-    name = models.CharField(max_length=120, null=False)
-    strength = models.CharField(max_length=120, null=False)
-    administration_method = models.CharField(max_length=120, null=False)
-    amount = models.CharField(max_length=120, null=False)
-    frequency = models.CharField(max_length=120, null=False)
-    administration_start_date = models.DateField(null=False)
-
-    # Users will be offered 2 dropdowns, chosing an INT and "day/week/month".
-    # This will then be parsed into a normal date, starting from administration_start_date.
-    administration_length = models.DateField(null=False)
-    
-
-    def __str__(self):
-        return f'{self.id} - {self.name}'
-
 class Condition(models.Model):
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
     name = models.CharField(max_length=120, null=False)
@@ -38,11 +21,23 @@ class Condition(models.Model):
     vet_clinic = models.CharField(max_length=120, null=True, blank=True)
     notes = models.CharField(max_length=120, null=True, blank=True)
 
-    # This should maybe NOT cascade?
-    medication = models.ForeignKey(Medication, blank=True, null=True, on_delete=models.CASCADE)
-
     def __str__(self):
         return f'{self.dog} - {self.name}'
+
+class Medication(models.Model):
+    name = models.CharField(max_length=120, null=False)
+    strength = models.CharField(max_length=120, null=False)
+    administration_method = models.CharField(max_length=120, null=False)
+    amount = models.CharField(max_length=120, null=False)
+    frequency = models.CharField(max_length=120, null=False)
+    administration_start_date = models.DateField(null=False)
+
+    administration_length = models.DateField(null=False)
+    dog = models.ForeignKey(Dog, null=True, blank=True, on_delete=models.CASCADE)
+    condition = models.ForeignKey(Condition, null=True, blank=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.id} - {self.name}'
 
 class Vaccination(models.Model):
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
