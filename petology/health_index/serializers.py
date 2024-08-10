@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import DogHealthIndex
-from .models import HealthIndexQuestion
+from .models import HealthIndexQuestion, Toothbrushing
 
 class DogHealthIndexSerializer(serializers.ModelSerializer):
     dog_name = serializers.CharField(source='dog.name')  # Assuming Dog model has a `name` field
@@ -22,3 +22,9 @@ class HealthIndexQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = HealthIndexQuestion
         fields = ['question_title', 'responses']
+
+
+class ToothbrushingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Toothbrushing
+        fields = ['dog', 'date_performed', 'streak']

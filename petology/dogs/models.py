@@ -44,6 +44,8 @@ class Dog(models.Model):
     registration_number = models.TextField(null=True, default=None)
     passport_number = models.TextField(null=True, default=None)
 
+    image = models.ImageField(upload_to='dog_images/', null=True, blank=True)  # New field
+
 
     def __str__(self):
         return f'{self.name} {self.id}' 

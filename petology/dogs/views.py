@@ -22,13 +22,12 @@ from datetime import datetime
 @permission_classes([IsAuthenticated])
 def register_dog(request):
     if request.user.is_authenticated:
-        print('dog sex inside back-end ', request.data.get('sex'))
         name = request.data.get('name')
-        breed_name = request.data.get('breed')  # Get breed name from request
+        breed_name = request.data.get('breed')
         birthday = datetime.strptime(request.data.get('birthday'), '%Y-%m-%d').date()
-        sex = request.data.get('sex')  # 1 = male, 2 = female
+        sex = request.data.get('sex')
+        image = request.FILES.get('image')  # Handle image upload
 
-        # Find the Breed instance
         try:
             breed = Breed.objects.get(name=breed_name)
         except Breed.DoesNotExist:
@@ -36,13 +35,17 @@ def register_dog(request):
 
         ownerId = request.user
 
-        # Create the new Dog object
-        new_dog = Dog.objects.create(name=name, breed=breed, birthday=birthday, sex=sex, ownerId=ownerId)
+        new_dog = Dog.objects.create(
+            name=name,
+            breed=breed,
+            birthday=birthday,
+            sex=sex,
+            ownerId=ownerId,
+            image=image  # Save the uploaded image
+        )
 
-        # Return the new dog's ID and status_code 200
         return Response({'dog_id': new_dog.id}, status=200)
     else:
-        # Handle unauthenticated user
         return Response({'error': 'User not authenticated'}, status=401)
 
 
@@ -57,24 +60,26 @@ def get_user_dogs(request):
             dog_data = {
                 'id': dog.id,
                 'name': dog.name,
-                'breed': dog.breed.name,  # Assuming Breed has a 'name' field
+                'breed': dog.breed.name,
                 'birthday': dog.birthday,
                 'sex': dog.sex,
-                'pedigree_name': dog.pedigree_name,                     # New field
-                'color': dog.color,                                     # New field
-                'insurance_company': dog.insurance_company,             # New field
-                'insurance_number': dog.insurance_number,               # New field
-                'feed': dog.feed,                                       # New field
-                'possible_feed_intolerance': dog.possible_feed_intolerance,  # New field
+                'pedigree_name': dog.pedigree_name,
+                'color': dog.color,
+                'insurance_company': dog.insurance_company,
+                'insurance_number': dog.insurance_number,
+                'feed': dog.feed,
+                'possible_feed_intolerance': dog.possible_feed_intolerance,
                 'id_number': dog.id_number,
                 'registration_number': dog.registration_number,
-                'passport_number': dog.passport_number
+                'passport_number': dog.passport_number,
+                'image_url': dog.image.url if dog.image else None  # Include image_url
             }
             dogs_data.append(dog_data)
 
         return Response({'dogs': dogs_data}, status=200)
     else:
         return Response({'error': 'User not authenticated'}, status=401)
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

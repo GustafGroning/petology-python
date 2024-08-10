@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
 from rest_framework.authtoken.views import obtain_auth_token
 from .views import register_dog, get_user_dogs, get_dog_by_id, get_all_breeds, update_dog, partial_update_dog, delete_dog
@@ -12,4 +14,4 @@ urlpatterns = [
 
     # Breeds
     path('breeds/', get_all_breeds, name='get_all_breeds'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
