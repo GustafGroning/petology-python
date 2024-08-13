@@ -1,4 +1,4 @@
-name: Deploy Flask API
+name: Deploy petology back-end
 
 on:
   push:
