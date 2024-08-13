@@ -13,3 +13,4 @@ users/__pycache__/*
 
 # Ignore specific SQLite database file
 petology/db.sqlite3
+petology/dogs/__pycache__/admin.cpython-37.pyc
