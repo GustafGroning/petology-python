@@ -40,8 +40,11 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '0.0.0.0',
     'localhost',
-    '127.0.0.1'
+    '127.0.0.1',
+    '13.60.186.171',  # Add your EC2 public IP address
+    'ec2-13-60-186-171.eu-north-1.compute.amazonaws.com'  # Add your EC2 domain
 ]
+
 
 # Base directory where media files are stored
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
