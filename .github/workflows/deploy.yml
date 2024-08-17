@@ -37,6 +37,7 @@ jobs:
         username: ${{ secrets.EC2_USERNAME }}
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
+          echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
           docker pull gustafgroning97/petology-python:version-${{ github.run_number }}
           docker stop petology-backend || true
           docker rm petology-backend || true
