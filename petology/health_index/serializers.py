@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import DogHealthIndex
 from .models import HealthIndexQuestion, Toothbrushing
-
+from articles.serializers import ArticleDetailSerializer
 class DogHealthIndexSerializer(serializers.ModelSerializer):
     dog_name = serializers.CharField(source='dog.name')  # Assuming Dog model has a `name` field
 
@@ -18,10 +18,11 @@ class ResponseSerializer(serializers.Serializer):
 
 class HealthIndexQuestionSerializer(serializers.ModelSerializer):
     responses = ResponseSerializer(many=True)
-
+    articles = ArticleDetailSerializer(many=True, read_only=True)
     class Meta:
         model = HealthIndexQuestion
-        fields = ['question_title', 'responses']
+        fields = ['question_title', 'responses', 'articles']
+
 
 
 class ToothbrushingSerializer(serializers.ModelSerializer):

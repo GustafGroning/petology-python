@@ -4,6 +4,7 @@ from django.utils import timezone
 from datetime import timedelta
 
 from dogs.models import Dog
+from articles.models import Article
 User = get_user_model()
 
 """
@@ -50,6 +51,7 @@ class Toothbrushing(models.Model):
 class HealthIndexQuestion(models.Model):
     question_title = models.CharField(max_length=250)
     responses = models.JSONField()
+    articles = models.ManyToManyField(Article, blank=True)
 
 
     def __str__(self):
