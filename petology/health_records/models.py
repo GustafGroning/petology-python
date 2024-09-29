@@ -42,6 +42,7 @@ class Medication(models.Model):
 class Vaccination(models.Model):
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
     name = models.CharField(max_length=120)
+    vaccination_detailed_name = models.CharField(max_length=120, null=True)
     vaccination_date = models.DateField()
     next_vaccination_date = models.DateField(null=True)
     clinic_name = models.CharField(max_length=120, null=True)
