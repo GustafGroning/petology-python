@@ -19,8 +19,8 @@ def create_medication(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def get_medications_for_dog(request, dog_id):
-    medications = Medication.objects.filter(condition__dog_id=dog_id).distinct()
+def get_medications_for_dog(request, dog_id):    
+    medications = Medication.objects.filter(dog_id=dog_id)
     serializer = MedicationSerializer(medications, many=True)
     return Response(serializer.data)
 
@@ -135,9 +135,11 @@ def delete_condition(request, pk):
 @permission_classes([IsAuthenticated])
 def create_vaccination(request):
     serializer = VaccinationSerializer(data=request.data)
+    print('vaccin serialz', serializer)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    print('Validation errors:', serializer.errors)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
