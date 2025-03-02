@@ -48,11 +48,24 @@ class Toothbrushing(models.Model):
 
     def __str__(self):
         return f'{self.dog} {self.date_performed}'
+
 class HealthIndexQuestion(models.Model):
+    class CategoryChoices(models.TextChoices):
+        GENERAL_CONDITION = 'general_condition', 'General Condition'
+        DENTAL_HEALTH = 'dental_health', 'Dental Health'
+        EYES = 'eyes', 'Eyes'
+        SKIN_AND_COAT = 'skin_and_coat', 'Skin and Coat'
+        LOCOMOTOR_SYSTEM = 'locomotor_system', 'Locomotor System'
+        OTHER = 'other', 'Other'
+
     question_title = models.CharField(max_length=250)
     responses = models.JSONField()
     articles = models.ManyToManyField(Article, blank=True)
-
+    category = models.CharField(
+        max_length=20,
+        choices=CategoryChoices.choices,
+        default=CategoryChoices.OTHER
+    )
 
     def __str__(self):
         return f'Question {self.id}'

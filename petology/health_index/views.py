@@ -90,17 +90,30 @@ def save_toothbrushing(request, dog_id):
     try:
         dog = get_object_or_404(Dog, id=dog_id)
         data = request.data
+        print("Request data:", data)
+
+        # Ensure the required fields are present
+        date_performed = data.get('date_performed')
+        streak = data.get('streak', 1)
+
+        if not date_performed:
+            print("Missing date_performed")
+            return Response({'error': 'date_performed is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Create and save the new toothbrushing record
         new_toothbrushing = Toothbrushing(
             dog=dog,
-            date_performed=data.get('date_performed'),
-            streak=data.get('streak', 1)
+            date_performed=date_performed,
+            streak=streak
         )
         new_toothbrushing.save()
 
         serializer = ToothbrushingSerializer(new_toothbrushing)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     except Exception as e:
+        print("Error saving toothbrushing data:", str(e))
         return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
     
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
