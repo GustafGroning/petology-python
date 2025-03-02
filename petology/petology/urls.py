@@ -1,41 +1,26 @@
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path, include  # Assuming you already have these imports
-from django.views.generic.base import RedirectView  # Import RedirectView
-
-"""petology URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-
+from django.views.generic.base import RedirectView
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/users/', include('users.urls')),  # Custom users app
-    path('api-token-auth/', obtain_jwt_token),
-    path('api-token-refresh/', refresh_jwt_token),
-    path('api-token-verify/', verify_jwt_token),
+    path('api-token-auth/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # Same endpoint, new view
+    path('api-token-refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api-token-verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('api/dog/', include('dogs.urls')),
     path('api/tasks/', include('tasks.urls')),
     path('api/articles/', include('articles.urls')),  # Include the articles app URLs
     path('api/health-index/', include('health_index.urls')),
     path('api/health-records/', include('health_records.urls')),
     path('', RedirectView.as_view(url='/admin/', permanent=False)),  # Redirect root to admin
-
 ]
 
 # This is to serve media files during development

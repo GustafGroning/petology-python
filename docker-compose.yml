@@ -1,10 +1,14 @@
-version: '3'
+version: "3.9"
 
 services:
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - ./petology:/app
+    container_name: django_app
     ports:
       - "8000:8000"
+    environment:
+      - DEBUG=True
+      - DJANGO_SECRET_KEY=your-secret-key
+    volumes:
+      - .:/app
+    working_dir: /app/petology  # Ensure the container starts in the right directory

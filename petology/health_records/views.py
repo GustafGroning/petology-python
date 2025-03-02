@@ -135,7 +135,6 @@ def delete_condition(request, pk):
 @permission_classes([IsAuthenticated])
 def create_vaccination(request):
     serializer = VaccinationSerializer(data=request.data)
-    print('vaccin serialz', serializer)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
