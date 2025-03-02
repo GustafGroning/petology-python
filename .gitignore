@@ -15,3 +15,8 @@ users/__pycache__/*
 petology/db.sqlite3
 petology/dogs/__pycache__/admin.cpython-37.pyc
 petology/petologyVenv/*
+
+# Ignore all virtual environments
+venv/
+.env/
+*Venv/
