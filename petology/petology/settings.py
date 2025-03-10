@@ -1,5 +1,6 @@
 import datetime
 import os
+from pathlib import Path
 """
 Django settings for petology project.
 
@@ -42,6 +43,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '13.60.186.171',  # Add your EC2 public IP address
+    '13.60.19.91',
     'ec2-13-60-186-171.eu-north-1.compute.amazonaws.com'  # Add your EC2 domain
 ]
 
@@ -110,19 +112,22 @@ WSGI_APPLICATION = 'petology.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME', 'petology'),
+        'USER': os.getenv('DB_USER', 'petology_user'),
+        'PASSWORD': os.getenv('DB_PASSWORD', ''),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
-    # REAL DB SETUP:
-#     'default': {
-#     'ENGINE': 'django.db.backends.postgresql',  # Set the database engine to PostgreSQL
-#     'NAME': 'petology',               # Set the name of your PostgreSQL database
-#     'USER': 'gustaf',               # Set the username for connecting to PostgreSQL
-#     'PASSWORD': 'admin123',       # Set the password for connecting to PostgreSQL
-#     'HOST': '16.171.40.250',               # Set the host address of your PostgreSQL instance (e.g., EC2 public IP or DNS)
-#     'PORT': '5432',                             # Set the port number for PostgreSQL (default: 5432)
-# }
 }
+
+# for local work
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation

@@ -19,9 +19,11 @@ class ResponseSerializer(serializers.Serializer):
 class HealthIndexQuestionSerializer(serializers.ModelSerializer):
     responses = ResponseSerializer(many=True)
     articles = ArticleDetailSerializer(many=True, read_only=True)
+    category = serializers.CharField()
+
     class Meta:
         model = HealthIndexQuestion
-        fields = ['question_title', 'responses', 'articles']
+        fields = ['question_title', 'category', 'responses', 'articles']
 
 
 

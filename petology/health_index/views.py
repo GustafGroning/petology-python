@@ -7,6 +7,17 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
+from django.db.models import OuterRef, Subquery
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from .models import HealthIndexQuestion
+from .serializers import HealthIndexQuestionSerializer
+from django.db.models import OuterRef, Subquery
+from django.db.models.functions import Random
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 
 from .serializers import DogHealthIndexSerializer, HealthIndexQuestionSerializer, ToothbrushingSerializer
 from .models import HealthIndexBatch, DogHealthIndex, HealthIndexQuestion, Dog, Toothbrushing
@@ -78,6 +89,32 @@ def get_questions_in_batch(request, batch_id):
         "questions": serializer.data
     }
     return Response(response_data, status=status.HTTP_200_OK)
+
+
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_random_question_per_category(request):
+    """
+    Fetches a single random question from each category.
+    Guarantees one per category using DISTINCT ON.
+    """
+
+    # Get all distinct categories
+    categories = HealthIndexQuestion.CategoryChoices.values
+
+    random_questions = []
+    
+    for category in categories:
+        question = HealthIndexQuestion.objects.filter(category=category).order_by(Random()).first()
+        if question:
+            random_questions.append(question)
+
+    # Serialize results
+    serializer = HealthIndexQuestionSerializer(random_questions, many=True)
+
+    return Response(serializer.data)
 
 
 ###################################################################

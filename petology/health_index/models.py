@@ -68,7 +68,7 @@ class HealthIndexQuestion(models.Model):
     )
 
     def __str__(self):
-        return f'Question {self.id}'
+        return f'{self.question_title}'
 
 
 FREQUENCY_CHOICES = (
