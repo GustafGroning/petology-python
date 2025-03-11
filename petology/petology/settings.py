@@ -1,6 +1,11 @@
 import datetime
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 """
 Django settings for petology project.
 
@@ -113,13 +118,14 @@ WSGI_APPLICATION = 'petology.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'petology'),
-        'USER': os.getenv('DB_USER', 'petology_user'),
-        'PASSWORD': os.getenv('DB_PASSWORD', ''),
-        'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': os.getenv('DB_PORT', '5432'),
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
+
 
 # for local work
 # DATABASES = {
