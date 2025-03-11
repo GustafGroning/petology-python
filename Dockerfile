@@ -11,7 +11,7 @@ COPY . /app/
 WORKDIR /app/petology
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y libpq-dev
+RUN apt-get update && apt-get install -y libpq-dev postgresql-client
 
 # Install Python dependencies
 RUN pip install --no-cache-dir --upgrade pip
